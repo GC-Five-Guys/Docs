@@ -1,9 +1,8 @@
-# 📋 WBS & 역할 분담표 (v2)
+# 📋 WBS & 역할 분담표 (v2.1)
 
 > **대상 독자**: 팀 전원 + 신규 멤버
 > **선행 문서**: [`01_기획/프로젝트_기획서.md`](../01_기획/프로젝트_기획서.md)
-> **버전**: v2.0 (2026-05-23)
-> **이전 버전과 차이**: 휴지통 작업 제거, Tiptap/우측바/캘린더 신규, 그래프 2D로 단순화
+> **버전**: v2.1 (2026-05-23 — 역할 재정의)
 
 ---
 
@@ -11,8 +10,8 @@
 
 > 누가 / 무엇을 / 언제까지 하는지 한눈에:
 
-- **5명 (PM 1 + FE 2 + BE 2)** — 각자 작업일 12-20일
-- **5개 워크 패키지**: WP1 기획·관리 / WP2 백엔드 / WP3 프론트엔드 / WP4 통합·테스트 / WP5 마무리·발표
+- **5명 (PM 1 + FE 2 + BE 1 + 인프라 1)** — 역할 재정의
+- **5개 워크 패키지**: WP1 기획·관리 / WP2 백엔드 / WP3 프론트엔드 / WP4 인프라 / WP5 통합·테스트·발표
 - **WBS 원칙**: 작업 단위는 ① **3일 이내**에 끝나고 ② **검증 가능한 산출물**이 있어야 함
 - **책임 분배 도구**: **RACI 매트릭스** (Responsible / Accountable / Consulted / Informed)
 
@@ -22,13 +21,12 @@
 
 ### 1.1 멤버
 
-| 코드 | 이름 | 역할 | 주력 (v2 반영) |
+| 코드 | 이름 | 역할 | 주력 |
 |---|---|---|---|
-| **PM** | 강두현 | Project Manager | 기획·일정·문서·이해관계자 |
-| **FE1** | 김진서 | Frontend Lead | **Tiptap 에디터 + 멀티탭 + 2D 그래프** (핵심) |
-| **FE2** | 최윤석 | Frontend | **4-pane 레이아웃 + 우측바 (검색+태그+캘린더) + 디자인** |
-| **BE1** | 김인현 | Backend Lead | API 설계 + 인증 + 그래프/통합검색/자주쓴태그 |
-| **BE2** | 김유신 | Backend | 노트/폴더 CRUD + 태그 파서 + 캘린더 API |
+| **PM** | 강두현 | **전체 총괄 관리 PM** | 기획·일정·문서·이해관계자·의사결정 |
+| **FE팀** | 김진서 + 최윤석 | **프론트엔드 전체** (둘이 자율 분담) | 4-pane 레이아웃·Tiptap 에디터·멀티탭·2D 그래프·우측바·디자인 시스템 |
+| **BE** | 김인현 | **백엔드 전체 + API 전체** | 인증·노트/폴더 CRUD·태그 파서·그래프·통합검색·자주쓴태그·캘린더 API |
+| **인프라** | 김유신 | **인프라 설계** (W1-W2 초) → **FE 지원** (W2 중반~) | Atlas·Vercel·Railway 셋업, CI/CD, 환경변수, 모니터링, 이후 FE 보강 |
 
 ### 1.2 RACI 정의
 
@@ -37,35 +35,40 @@
 - **C** (Consulted): 의견을 구해야 하는 사람
 - **I** (Informed): 결과를 통보받는 사람
 
-### 1.3 RACI 매트릭스 (v2)
+### 1.3 RACI 매트릭스 (v2.1)
 
-| 작업 영역 | PM | FE1 | FE2 | BE1 | BE2 |
-|---|:---:|:---:|:---:|:---:|:---:|
-| 기획서 / 일정 관리 | **A·R** | I | I | I | I |
-| API 명세 작성 | C | C | I | **A·R** | C |
-| DB 스키마 설계 | C | I | I | **A·R** | C |
-| 인증 (Auth) | I | C | C | **A·R** | I |
-| 노트 CRUD API | I | I | I | A | **R** |
-| 폴더 CRUD API | I | I | I | A | **R** |
-| **태그 파서 (#@&)** | I | C | I | A | **R** |
-| **통합 검색 API** (v2 신규) | I | C | I | **A·R** | C |
-| **자주 쓴 태그 API** (v2 신규) | I | C | I | **A·R** | C |
-| **캘린더 API** (v2 신규) | I | I | C | A | **R** |
-| 그래프 데이터 쿼리 (옵션 A) | I | C | I | **A·R** | C |
-| **4-pane 레이아웃** (v2 신규) | I | C | **A·R** | I | I |
-| **MenuBar / Sidebar / FolderTree** | I | C | **A·R** | I | I |
-| 디자인 시스템 (UI Primitives) | I | C | **A·R** | I | I |
-| 로그인/회원가입 UI | I | C | **A·R** | C | I |
-| **TabBar + Tab Store (멀티탭)** ⭐ | I | **A·R** | C | I | I |
-| **TiptapEditor + TokenBadge + 표** ⭐ | I | **A·R** | C | C | C |
-| **2D 그래프 뷰 (옵션 A)** ⭐ | I | **A·R** | C | C | I |
-| **RightPanel (검색+자주쓴태그+캘린더)** ⭐ | I | C | **A·R** | C | C |
-| 다크/라이트 테마 | I | I | **A·R** | I | I |
-| 반응형 점검 (1280·1440) | I | C | **A·R** | I | I |
-| 코딩 컨벤션 / Git 룰 | **A·R** | C | C | C | C |
-| 회의 진행 / 회의록 | **A·R** | I | I | I | I |
-| 시연 영상 / 발표 자료 | **A·R** | R | R | R | R |
-| 최종 보고서 정리 | **A·R** | C | C | C | C |
+| 작업 영역 | PM (강두현) | FE팀 (진서+윤석) | BE (인현) | 인프라 (유신) |
+|---|:---:|:---:|:---:|:---:|
+| 기획서 / 일정 관리 | **A·R** | I | I | I |
+| API 명세 작성 | C | C | **A·R** | I |
+| DB 스키마 설계 | C | I | **A·R** | C |
+| 인증 (Auth) | I | C | **A·R** | C |
+| 노트/폴더 CRUD API | I | I | **A·R** | I |
+| **태그 파서 (#@&)** | I | C | **A·R** | I |
+| **통합 검색 API** | I | C | **A·R** | I |
+| **자주 쓴 태그 API** | I | C | **A·R** | I |
+| **캘린더 API** | I | C | **A·R** | I |
+| 그래프 데이터 쿼리 (옵션 A) | I | C | **A·R** | I |
+| **4-pane 레이아웃** | I | **A·R** | I | C |
+| **MenuBar / Sidebar / FolderTree** | I | **A·R** | I | I |
+| 디자인 시스템 (UI Primitives) | I | **A·R** | I | I |
+| 로그인/회원가입 UI | I | **A·R** | C | I |
+| **TabBar + Tab Store (멀티탭)** | I | **A·R** | I | I |
+| **TiptapEditor + TokenBadge + 표** | I | **A·R** | C | I |
+| **2D 그래프 뷰 (옵션 A)** | I | **A·R** | C | I |
+| **RightPanel (검색+자주쓴태그+캘린더)** | I | **A·R** | C | C |
+| 다크/라이트 테마 | I | **A·R** | I | I |
+| 반응형 점검 (1280·1440) | I | **A·R** | I | I |
+| **MongoDB Atlas 클러스터 셋업** | I | I | C | **A·R** |
+| **Vercel 배포 (Frontend)** | I | C | I | **A·R** |
+| **Railway / Render 배포 (Backend)** | I | I | C | **A·R** |
+| **GitHub Actions CI (lint + test)** | I | C | C | **A·R** |
+| **환경변수 관리 (.env, .env.example)** | I | C | C | **A·R** |
+| **운영 모니터링 (로그, 헬스체크)** | I | I | C | **A·R** |
+| 코딩 컨벤션 / Git 룰 | **A·R** | C | C | C |
+| 회의 진행 / 회의록 | **A·R** | I | I | I |
+| 시연 영상 / 발표 자료 | **A·R** | R | R | R |
+| 최종 보고서 정리 | **A·R** | C | C | C |
 
 > ✅ 각 행에 **A(Accountable)는 반드시 1명**. 책임 분산 금지.
 
@@ -76,12 +79,12 @@
 ### Level 1: 5개 워크 패키지
 
 ```
-프로젝트 (Tri-Link v2)
-├── WP1. 기획·관리
-├── WP2. 백엔드 개발
-├── WP3. 프론트엔드 개발
-├── WP4. 통합·테스트
-└── WP5. 마무리·발표
+프로젝트 (Tri-Link v2.1)
+├── WP1. 기획·관리 (PM)
+├── WP2. 백엔드 개발 (BE)
+├── WP3. 프론트엔드 개발 (FE팀)
+├── WP4. 인프라 (인프라 → FE 지원)
+└── WP5. 통합·테스트·발표 (전원)
 ```
 
 ---
@@ -91,189 +94,210 @@
 | ID | 작업 | 산출물 | 담당 | 기간 |
 |---|---|---|:---:|:---:|
 | 1.1 | 프로젝트 기획서 v2 | `docs/01_기획/프로젝트_기획서.md` | PM | 완료 |
-| 1.2 | 일정·역할 분담 v2 | `docs/02_일정/*` | PM | 완료 |
+| 1.2 | 일정·역할 분담 v2.1 | `docs/02_일정/*` | PM | 완료 |
 | 1.3 | 설계 문서 v2 (Arch/DB/API/UI/Component) | `docs/03_설계/*` | PM | 완료 |
 | 1.4 | 개발 가이드 (Git/컨벤션) | `docs/04_개발가이드/*` | PM | 완료 |
-| 1.5 | 주간 회의 (주 2회, 화·금) | 회의록 6회+ | PM | 4주 |
-| 1.6 | 리스크 트래킹 v2 | `docs/05_관리/리스크_관리.md` | PM | 4주 |
-| 1.7 | 데모 시나리오 작성 | 시연 스크립트 | PM | W3-4 |
-| 1.8 | 발표 자료 (PPT) | 슬라이드 15장 | PM + 전원 | W4 |
-| 1.9 | 최종 보고서 정리 | 통합 문서 PDF | PM | W4 |
+| 1.5 | 주간 회의 (주 2회, 화·금) | 회의록 누적 | PM | 2주 |
+| 1.6 | 데모 시나리오 작성 | 시연 스크립트 | PM | W2 |
+| 1.7 | 발표 자료 (PPT) | 슬라이드 15장 | PM + 전원 | W2 |
+| 1.8 | 최종 보고서 정리 | 통합 문서 PDF | PM | W2 |
 
 ---
 
-### WP2. 백엔드 개발 (v2 업데이트)
+### WP2. 백엔드 개발 (BE — 김인현 전담)
 
-#### 2.A 초기 셋업 (BE1 · 3일)
+> ⚠️ **주의**: BE 혼자 모든 백엔드 담당. 일정 압박 시 인프라(유신)가 단순 CRUD 일부 분담 가능 (R21 비상 계획)
 
-| ID | 작업 | 산출물 | 담당 | 기간 |
-|---|---|---|:---:|:---:|
-| 2.A.1 | Node.js + TS + Express 보일러플레이트 | `Backend/src/app.ts`, `server.ts` | BE1 | 0.5일 |
-| 2.A.2 | MongoDB Atlas 클러스터 + `.env` | 접속 URI | BE1 | 0.5일 |
-| 2.A.3 | Mongoose 연결 + 헬스체크 | `GET /health` 200 | BE1 | 0.5일 |
-| 2.A.4 | 폴더 구조 (routes/controllers/services/repos) | 빈 골격 | BE1 | 0.5일 |
-| 2.A.5 | 에러 핸들러 + zod 검증 미들웨어 | `middlewares/*` | BE1 | 1일 |
-
-#### 2.B 인증 (BE1 · 3일)
+#### 2.A 초기 셋업 (3일)
 
 | ID | 작업 | 산출물 | 담당 | 기간 |
 |---|---|---|:---:|:---:|
-| 2.B.1 | `User` 모델 + 비밀번호 해시 | `models/User.ts`, `utils/hash.ts` | BE1 | 0.5일 |
-| 2.B.2 | `POST /auth/signup` | 통합 테스트 | BE1 | 0.5일 |
-| 2.B.3 | `POST /auth/login` (JWT) | 통합 테스트 | BE1 | 0.5일 |
-| 2.B.4 | `authGuard` 미들웨어 | `middlewares/authGuard.ts` | BE1 | 0.5일 |
-| 2.B.5 | `/auth/me`, `/users/me` (PATCH/DELETE) | 5개 API | BE1 | 1일 |
+| 2.A.1 | Node.js + TS + Express 보일러플레이트 | `Backend/src/app.ts`, `server.ts` | BE | 0.5일 |
+| 2.A.2 | Mongoose 연결 (Atlas URI는 인프라 제공) | DB 연결 OK | BE | 0.5일 |
+| 2.A.3 | 헬스체크 + 폴더 구조 골격 | `GET /health` 200 | BE | 0.5일 |
+| 2.A.4 | 에러 핸들러 + zod 검증 미들웨어 | `middlewares/*` | BE | 1.5일 |
 
-#### 2.C 노트·폴더 CRUD (BE2 · 5일)
-
-| ID | 작업 | 산출물 | 담당 | 기간 |
-|---|---|---|:---:|:---:|
-| 2.C.1 | `Folder` 모델 + 트리 조회 | API 1개 | BE2 | 1일 |
-| 2.C.2 | 폴더 CRUD + 순환 참조 방지 + **하드 삭제 정책** | API 3개 | BE2 | 1일 |
-| 2.C.3 | `Document` 모델 (임베드 nodes/relationships) — **`deleted_at` 제거** | `models/Document.ts` | BE2 | 0.5일 |
-| 2.C.4 | 노트 CRUD — **하드 삭제 정책** | API 5개 | BE2 | 1.5일 |
-| 2.C.5 | 노트 검색 (기본 — `/notes?date=` 등 필터) | API 동작 | BE2 | 1일 |
-
-#### 2.D 태그 파서 (BE2 · 2일) — v2 변경
+#### 2.B 인증 (3일)
 
 | ID | 작업 | 산출물 | 담당 | 기간 |
 |---|---|---|:---:|:---:|
-| 2.D.1 | `tagParserService` 구현 (`#@&` 정규식 — **공백 다음만 트리거**) | `services/tagParserService.ts` | BE2 | 1일 |
-| 2.D.2 | Jest 단위 테스트 10케이스+ (이메일 false-positive 포함) | `tests/tagParser.test.ts` | BE2 | 0.5일 |
-| 2.D.3 | 노트 저장 시 파서 통합 + `nodes` 동기화 (트랜잭션) | PUT API 통합 | BE2 + BE1 | 0.5일 |
+| 2.B.1 | `User` 모델 + bcrypt 해시 | `models/User.ts` | BE | 0.5일 |
+| 2.B.2 | `POST /auth/signup` + `POST /auth/login` | JWT 발급 | BE | 1일 |
+| 2.B.3 | `authGuard` 미들웨어 | `middlewares/authGuard.ts` | BE | 0.5일 |
+| 2.B.4 | `/auth/me`, `/users/me` (PATCH/DELETE) | 5개 API | BE | 1일 |
 
-#### 2.E 그래프 + v2 신규 API (BE1 · 4일)
-
-| ID | 작업 | 산출물 | 담당 | 기간 |
-|---|---|---|:---:|:---:|
-| 2.E.1 | `Node` 모델 + 인덱스 (v2: `token_type` 명명) | `models/Node.ts` | BE1 | 0.5일 |
-| 2.E.2 | **그래프 API (옵션 A) — 파일 중심 + 공통토큰 엣지** | `GET /graph?types=` | BE1 | 1.5일 |
-| 2.E.3 | `GET /graph/node/:label` (관련 노트 집계) | API 1개 | BE1 | 0.5일 |
-| 2.E.4 | **통합 검색 `GET /search` (엔티티+노트)** ⭐ v2 | API 1개 | BE1 | 1일 |
-| 2.E.5 | **자주 쓴 태그 `GET /stats/top-tokens`** ⭐ v2 | API 1개 | BE1 | 0.5일 |
-
-#### 2.F 캘린더 + 마무리 (BE2 + BE1 · 2일)
+#### 2.C 노트·폴더 CRUD (5일)
 
 | ID | 작업 | 산출물 | 담당 | 기간 |
 |---|---|---|:---:|:---:|
-| 2.F.1 | **캘린더 `GET /calendar`** ⭐ v2 | API 1개 | BE2 | 1일 |
-| 2.F.2 | OpenAPI 명세 자동 생성 | `Backend/openapi.yaml` | BE1 | 0.5일 |
-| 2.F.3 | Postman Collection v2 | `docs/postman/*.json` | BE1 | 0.5일 |
-| 2.F.4 | 시드 데이터 (v2 스키마 반영) | `scripts/seed.ts` | BE2 | 0.5일 |
-| 2.F.5 | 백엔드 배포 (Railway) | 운영 URL | BE1 | 0.5일 |
+| 2.C.1 | `Folder` 모델 + 트리 조회 | API 1개 | BE | 1일 |
+| 2.C.2 | 폴더 CRUD + 순환 참조 방지 + 하드 삭제 | API 3개 | BE | 1일 |
+| 2.C.3 | `Document` 모델 (임베드 nodes/relationships) | `models/Document.ts` | BE | 0.5일 |
+| 2.C.4 | 노트 CRUD (하드 삭제) | API 5개 | BE | 1.5일 |
+| 2.C.5 | 노트 검색 (기본 필터) | API 동작 | BE | 1일 |
+
+#### 2.D 태그 파서 (2일)
+
+| ID | 작업 | 산출물 | 담당 | 기간 |
+|---|---|---|:---:|:---:|
+| 2.D.1 | `tagParserService` (`#@&` 정규식 — 공백 다음만) | `services/tagParserService.ts` | BE | 1일 |
+| 2.D.2 | Jest 단위 테스트 10케이스+ | `tests/tagParser.test.ts` | BE | 0.5일 |
+| 2.D.3 | 노트 저장 시 파서 통합 + `nodes` 동기화 (트랜잭션) | PUT API 통합 | BE | 0.5일 |
+
+#### 2.E 그래프 + v2 신규 API (4일)
+
+| ID | 작업 | 산출물 | 담당 | 기간 |
+|---|---|---|:---:|:---:|
+| 2.E.1 | `Node` 모델 + 인덱스 (`token_type` 명명) | `models/Node.ts` | BE | 0.5일 |
+| 2.E.2 | **그래프 API (옵션 A) — 파일 중심 + 공통토큰 엣지** | `GET /graph?types=` | BE | 1.5일 |
+| 2.E.3 | `GET /graph/node/:label` (관련 노트 집계) | API 1개 | BE | 0.5일 |
+| 2.E.4 | **통합 검색 `GET /search` (엔티티+노트)** | API 1개 | BE | 1일 |
+| 2.E.5 | **자주 쓴 태그 `GET /stats/top-tokens`** | API 1개 | BE | 0.5일 |
+
+#### 2.F 캘린더 + 마무리 (2일)
+
+| ID | 작업 | 산출물 | 담당 | 기간 |
+|---|---|---|:---:|:---:|
+| 2.F.1 | **캘린더 `GET /calendar`** | API 1개 | BE | 1일 |
+| 2.F.2 | OpenAPI 명세 자동 생성 | `Backend/openapi.yaml` | BE | 0.5일 |
+| 2.F.3 | Postman Collection v2 | `docs/postman/*.json` | BE | 0.5일 |
+| 2.F.4 | 시드 데이터 (v2 스키마 반영) | `scripts/seed.ts` | BE | 0.5일 |
+
+> 📌 **BE 총합 19일** — 4주에 빠듯. 일정 위험 시 인프라(유신)가 2.C 노트/폴더 CRUD 일부 지원 가능.
 
 ---
 
-### WP3. 프론트엔드 개발 (v2 대폭 업데이트)
+### WP3. 프론트엔드 개발 (FE팀 — 진서·윤석 자율 분담)
 
-#### 3.A 초기 셋업 + 디자인 시스템 (FE2 · 4일)
+> 💡 작업 단위로 둘이 자율 분담. 매주 회의에서 다음 주 작업 분담 합의. 후반에 인프라(유신)가 합류해 마무리 지원.
 
-| ID | 작업 | 산출물 | 담당 | 기간 |
-|---|---|---|:---:|:---:|
-| 3.A.1 | Next.js 14 + TS + Tailwind 보일러플레이트 | 빌드 성공 | FE2 | 0.5일 |
-| 3.A.2 | 디자인 토큰 → `tailwind.config.ts` | 토큰 적용 | FE2 | 0.5일 |
-| 3.A.3 | UI Primitives 11개 + `<ConfirmDialog/>` (v2 신규) | `components/ui/*` | FE2 | 2일 |
-| 3.A.4 | 글로벌 Provider (Theme, Auth, SWRConfig) | `app/layout.tsx` | FE2 | 1일 |
-
-#### 3.B 인증 화면 (FE2 · 2일)
+#### 3.A 초기 셋업 + 디자인 시스템 (4일)
 
 | ID | 작업 | 산출물 | 담당 | 기간 |
 |---|---|---|:---:|:---:|
-| 3.B.1 | `/login` 페이지 + 폼 | 동작 | FE2 | 0.5일 |
-| 3.B.2 | `/signup` 페이지 + 실시간 검증 | 동작 | FE2 | 1일 |
-| 3.B.3 | 라우트 가드 + 인증 후 리다이렉트 | 동작 | FE2 | 0.5일 |
+| 3.A.1 | Next.js 14 + TS + Tailwind 보일러플레이트 | 빌드 성공 | FE팀 | 0.5일 |
+| 3.A.2 | 디자인 토큰 → `tailwind.config.ts` | 토큰 적용 | FE팀 | 0.5일 |
+| 3.A.3 | UI Primitives 11개 + `<ConfirmDialog/>` | `components/ui/*` | FE팀 | 2일 |
+| 3.A.4 | 글로벌 Provider (Theme, Auth, SWRConfig) | `app/layout.tsx` | FE팀 | 1일 |
 
-#### 3.C **4-pane 레이아웃** (FE2 · 3일) ⭐ v2 신규
-
-| ID | 작업 | 산출물 | 담당 | 기간 |
-|---|---|---|:---:|:---:|
-| 3.C.1 | `MainLayout` 4-pane 골격 (60/240/가변/300) | 레이아웃 동작 | FE2 | 1일 |
-| 3.C.2 | `<MenuBar/>` (모드 전환) | 컴포넌트 | FE2 | 0.5일 |
-| 3.C.3 | `<Sidebar/>` + `<FolderTree/>` (재귀) | 컴포넌트 | FE2 | 1일 |
-| 3.C.4 | `+ 새 폴더/파일` 인라인 입력 + API 연동 | 동작 | FE2 | 0.5일 |
-
-#### 3.D **TabBar + Tab Store** (FE1 · 2일) ⭐ v2 신규
+#### 3.B 인증 화면 (2일)
 
 | ID | 작업 | 산출물 | 담당 | 기간 |
 |---|---|---|:---:|:---:|
-| 3.D.1 | `tabStore` (Zustand) + localStorage 동기화 | store 동작 | FE1 | 1일 |
-| 3.D.2 | `<TabBar/>` UI + open/close/activate | 동작 | FE1 | 1일 |
+| 3.B.1 | `/login` 페이지 + 폼 | 동작 | FE팀 | 0.5일 |
+| 3.B.2 | `/signup` 페이지 + 실시간 검증 | 동작 | FE팀 | 1일 |
+| 3.B.3 | 라우트 가드 + 인증 후 리다이렉트 | 동작 | FE팀 | 0.5일 |
 
-#### 3.E **TiptapEditor** (FE1 · 5일) ⭐ v2 핵심
-
-| ID | 작업 | 산출물 | 담당 | 기간 |
-|---|---|---|:---:|:---:|
-| 3.E.1 | Tiptap 설치 + StarterKit + Markdown 입출력 PoC | 빈 에디터 | FE1 | 0.5일 |
-| 3.E.2 | `Table`, `TableRow`, `TableCell` 확장 (Obsidian 스타일) | 표 GUI | FE1 | 1일 |
-| 3.E.3 | `TokenBadge` inline node (#@& 배지) | 색깔 배지 | FE1 | 1일 |
-| 3.E.4 | `useAutocomplete` 훅 + suggestion 드롭다운 | 드롭다운 | FE1 | 1.5일 |
-| 3.E.5 | `useAutosave` 훅 (실시간 + 페이지 종료 flush) | 자동저장 | FE1 | 0.5일 |
-| 3.E.6 | 노트 삭제 (`ConfirmDialog`) + 폴더 이동 + 공개 토글 | 동작 | FE1 | 0.5일 |
-
-#### 3.F **2D 그래프 뷰** (FE1 · 4일) ⭐ v2 핵심
+#### 3.C 4-pane 레이아웃 (3일)
 
 | ID | 작업 | 산출물 | 담당 | 기간 |
 |---|---|---|:---:|:---:|
-| 3.F.1 | `react-force-graph-2d` 설치 + PoC (10노드) | 동작 | FE1 | 0.5일 |
-| 3.F.2 | `<GraphCanvas/>` 실제 데이터 연결 (옵션 A) | 동작 | FE1 | 1.5일 |
-| 3.F.3 | `<GraphToolbar/>` 토글 3개 (#@&) | 동작 | FE1 | 0.5일 |
-| 3.F.4 | `<NodeHoverCard/>` + 더블클릭 → 새 탭 | 동작 | FE1 | 1일 |
-| 3.F.5 | `<Legend/>` + `<GraphStats/>` | 표시 | FE1 | 0.5일 |
+| 3.C.1 | `MainLayout` 4-pane 골격 (60/240/가변/300) | 레이아웃 동작 | FE팀 | 1일 |
+| 3.C.2 | `<MenuBar/>` (모드 전환) | 컴포넌트 | FE팀 | 0.5일 |
+| 3.C.3 | `<Sidebar/>` + `<FolderTree/>` (재귀) | 컴포넌트 | FE팀 | 1일 |
+| 3.C.4 | `+ 새 폴더/파일` 인라인 입력 + API 연동 | 동작 | FE팀 | 0.5일 |
 
-#### 3.G **RightPanel** (FE2 · 4일) ⭐ v2 핵심
-
-| ID | 작업 | 산출물 | 담당 | 기간 |
-|---|---|---|:---:|:---:|
-| 3.G.1 | `<RightPanel/>` 골격 + 스크롤 영역 분리 | 레이아웃 | FE2 | 0.5일 |
-| 3.G.2 | `<SearchBox/>` + `<SearchResults/>` (debounce 300ms) | 동작 | FE2 | 1.5일 |
-| 3.G.3 | `<TopTokens/>` 자주 쓴 태그 9개 (3타입 × 3개) | 동작 | FE2 | 1일 |
-| 3.G.4 | `<CalendarWidget/>` 월간 + 작성일 dot + 날짜 클릭 모달 | 동작 | FE2 | 1일 |
-
-#### 3.H 마무리 (FE2 · 2일)
+#### 3.D TabBar + Tab Store (2일)
 
 | ID | 작업 | 산출물 | 담당 | 기간 |
 |---|---|---|:---:|:---:|
-| 3.H.1 | 다크/라이트 테마 토글 (모든 페이지 점검) | 동작 | FE2 | 1일 |
-| 3.H.2 | 4가지 상태(Loading/Empty/Error/Success) 일관화 | 점검 | FE2 | 0.5일 |
-| 3.H.3 | 반응형 점검 (1280·1440) | 깨짐 없음 | FE2 | 0.25일 |
-| 3.H.4 | 프론트 배포 (Vercel) | 운영 URL | FE2 | 0.25일 |
+| 3.D.1 | `tabStore` (Zustand) + localStorage 동기화 | store 동작 | FE팀 | 1일 |
+| 3.D.2 | `<TabBar/>` UI + open/close/activate | 동작 | FE팀 | 1일 |
+
+#### 3.E TiptapEditor (5일) ⭐
+
+| ID | 작업 | 산출물 | 담당 | 기간 |
+|---|---|---|:---:|:---:|
+| 3.E.1 | Tiptap + StarterKit + Markdown 입출력 PoC | 빈 에디터 | FE팀 | 0.5일 |
+| 3.E.2 | `Table`, `TableRow`, `TableCell` 확장 (Obsidian 스타일) | 표 GUI | FE팀 | 1일 |
+| 3.E.3 | `TokenBadge` inline node (#@& 배지) | 색깔 배지 | FE팀 | 1일 |
+| 3.E.4 | `useAutocomplete` 훅 + suggestion 드롭다운 | 드롭다운 | FE팀 | 1.5일 |
+| 3.E.5 | `useAutosave` 훅 (실시간 + 페이지 종료 flush) | 자동저장 | FE팀 | 0.5일 |
+| 3.E.6 | 노트 삭제 (`ConfirmDialog`) + 폴더 이동 + 공개 토글 | 동작 | FE팀 | 0.5일 |
+
+#### 3.F 2D 그래프 뷰 (4일) ⭐
+
+| ID | 작업 | 산출물 | 담당 | 기간 |
+|---|---|---|:---:|:---:|
+| 3.F.1 | `react-force-graph-2d` 설치 + PoC | 동작 | FE팀 | 0.5일 |
+| 3.F.2 | `<GraphCanvas/>` 실제 데이터 연결 (옵션 A) | 동작 | FE팀 | 1.5일 |
+| 3.F.3 | `<GraphToolbar/>` 토글 3개 (#@&) | 동작 | FE팀 | 0.5일 |
+| 3.F.4 | `<NodeHoverCard/>` + 더블클릭 → 새 탭 | 동작 | FE팀 | 1일 |
+| 3.F.5 | `<Legend/>` + `<GraphStats/>` | 표시 | FE팀 | 0.5일 |
+
+#### 3.G RightPanel (4일) ⭐
+
+| ID | 작업 | 산출물 | 담당 | 기간 |
+|---|---|---|:---:|:---:|
+| 3.G.1 | `<RightPanel/>` 골격 + 스크롤 영역 분리 | 레이아웃 | FE팀 | 0.5일 |
+| 3.G.2 | `<SearchBox/>` + `<SearchResults/>` (debounce 300ms) | 동작 | FE팀 | 1.5일 |
+| 3.G.3 | `<TopTokens/>` 자주 쓴 태그 9개 | 동작 | FE팀 | 1일 |
+| 3.G.4 | `<CalendarWidget/>` 월간 + 작성일 dot + 날짜 클릭 모달 | 동작 | FE팀 | 1일 |
+
+#### 3.H 마무리 (2일) — 인프라(유신) 합류 가능
+
+| ID | 작업 | 산출물 | 담당 | 기간 |
+|---|---|---|:---:|:---:|
+| 3.H.1 | 다크/라이트 테마 토글 (모든 페이지 점검) | 동작 | FE팀 + 인프라 | 1일 |
+| 3.H.2 | 4가지 상태(Loading/Empty/Error/Success) 일관화 | 점검 | FE팀 + 인프라 | 0.5일 |
+| 3.H.3 | 반응형 점검 (1280·1440) | 깨짐 없음 | FE팀 + 인프라 | 0.25일 |
+| 3.H.4 | 버그 픽스 + UX 보강 | 동작 | FE팀 + 인프라 | 0.25일 |
+
+> 📌 **FE팀 총합 약 26일** — 2명이 분담하므로 인당 13일
 
 ---
 
-### WP4. 통합·테스트
+### WP4. 인프라 (유신 — W1-W2 초 집중)
 
 | ID | 작업 | 산출물 | 담당 | 기간 |
 |---|---|---|:---:|:---:|
-| 4.1 | FE ↔ BE 연결 (CORS, 환경변수) | 로컬 통합 | 전원 | W2 (1일) |
-| 4.2 | 핵심 시나리오 수동 테스트 (회원가입→일기→그래프) | 체크리스트 | PM + 전원 | W3 (0.5일) |
-| 4.3 | 버그 트래킹 (GitHub Issues) | 이슈 라벨 | PM | 상시 |
-| 4.4 | 사용성 테스트 (외부 사용자 5명) | 피드백 정리 | PM | W4 (1일) |
+| 4.1 | MongoDB Atlas 클러스터 생성 + IP 화이트리스트 | 접속 URI 공유 | 인프라 | 0.5일 |
+| 4.2 | Vercel 프로젝트 생성 + GitHub 연동 (FE 자동 배포) | 운영 URL | 인프라 | 0.5일 |
+| 4.3 | Railway 프로젝트 생성 + GitHub 연동 (BE 자동 배포) | 운영 URL | 인프라 | 0.5일 |
+| 4.4 | `.env.example` 작성 (FE/BE 양쪽) + 시크릿 가이드 | 파일 | 인프라 | 0.5일 |
+| 4.5 | GitHub Actions CI (lint + test on PR) | `.github/workflows/*.yml` | 인프라 | 1일 |
+| 4.6 | CORS 정책 + helmet 미들웨어 셋업 (BE와 협의) | 설정 적용 | 인프라 | 0.5일 |
+| 4.7 | Husky pre-commit hook (`.env` 차단) | `.husky/pre-commit` | 인프라 | 0.5일 |
+| 4.8 | 운영 환경 헬스체크 + 로그 확인 (winston) | 점검 | 인프라 | 0.5일 |
+| 4.9 | 배포 가이드 문서 작성 | `docs/04_개발가이드/배포_가이드.md` (선택) | 인프라 | 0.5일 |
+
+> 📌 **인프라 총합 약 5일** — W1-W2 초 집중. 이후 FE 지원 또는 BE 비상 지원
+
+#### 4.X — 비상 지원 (R21 트리거 시)
+
+| ID | 시나리오 | 행동 | 담당 |
+|---|---|---|:---:|
+| 4.X.1 | BE 일정 압박 시 (BE 작업 W2 종료까지 60% 미만) | 인프라가 노트/폴더 CRUD API 일부 분담 | 인프라 |
+| 4.X.2 | FE 마무리 시 (W3 종료부터) | 인프라가 FE 마무리 작업 합류 (3.H) | 인프라 |
 
 ---
 
-### WP5. 마무리·발표
+### WP5. 통합·테스트·발표 (전원)
 
 | ID | 작업 | 산출물 | 담당 | 기간 |
 |---|---|---|:---:|:---:|
-| 5.1 | README.md 최종화 | 메인 README | PM | W4 |
-| 5.2 | 시연 영상 (3-5분) | mp4 파일 | FE1 + PM | W4 |
-| 5.3 | 발표 PPT (15장) | pptx | PM + 전원 | W4 |
-| 5.4 | 최종 보고서 (docs 통합 PDF) | PDF | PM | W4 |
-| 5.5 | 발표 리허설 (2회) | 피드백 반영 | 전원 | W4 |
+| 5.1 | FE ↔ BE 연결 (CORS, 환경변수) | 로컬 통합 | 전원 | W2 (1일) |
+| 5.2 | 핵심 시나리오 수동 테스트 (회원가입→일기→그래프) | 체크리스트 | PM + 전원 | W3 (0.5일) |
+| 5.3 | 버그 트래킹 (GitHub Issues) | 이슈 라벨 | PM | 상시 |
+| 5.4 | 사용성 테스트 (외부 사용자 5명) | 피드백 정리 | PM | W4 (1일) |
+| 5.5 | README 최종화 | 메인 README | PM | W4 |
+| 5.6 | 시연 영상 (3-5분) | mp4 | FE팀 + PM | W4 |
+| 5.7 | 발표 PPT (15장) | pptx | PM + 전원 | W4 |
+| 5.8 | 최종 보고서 (docs 통합 PDF) | PDF | PM | W4 |
+| 5.9 | 발표 리허설 (2회) | 피드백 반영 | 전원 | W4 |
 
 ---
 
-## 3. 인당 작업량 요약 (Days, v2)
+## 3. 인당 작업량 요약 (Days, v2.1)
 
 | 멤버 | 작업일 | 비고 |
 |---|:---:|---|
-| **PM (강두현)** | 20일 (전 기간 / 회의·문서·관리) | |
-| **FE1 (김진서)** | 18일 (멀티탭 + Tiptap + 2D 그래프) | 가장 무거운 기술 부담 |
-| **FE2 (최윤석)** | 18일 (셋업 + 4-pane + 인증 + **우측바** + 마무리) | v2에서 +2일 (우측바·캘린더 신규) |
-| **BE1 (김인현)** | 17일 (셋업 + 인증 + 그래프 + **검색+자주쓴태그** + 배포) | v2에서 +2일 (신규 API 2개) |
-| **BE2 (김유신)** | 13일 (노트·폴더 CRUD + 태그 파서 + **캘린더 API**) | v2에서 +1일 (캘린더) |
+| **PM (강두현)** | 20일 (전 기간 / 회의·문서·관리·발표) | |
+| **FE팀 (진서+윤석)** | 26일 ÷ 2 = **인당 13일** | 둘이 자율 분담, 후반 인프라 지원 받음 |
+| **BE (인현)** | **19일** | 백엔드 전체 단독 책임 — 일정 압박 주의 (R21) |
+| **인프라 (유신)** | **5일 (인프라) + 5일 (FE/BE 지원) = 10일** | W1-W2 초 인프라 집중, W2 중반~ FE/BE 지원 |
 
-> ⚖️ FE1·BE1 무게 유지. FE2·BE2도 v2에서 작업 약간 추가됨.
+> ⚠️ BE 19일은 4주에 빠듯. 인프라가 W2 중반부터 노트/폴더 CRUD 일부 지원 시 안정 확보.
 
 ---
 
@@ -281,6 +305,7 @@
 
 | 우선 | 작업 | 마감 | 누락 시 영향 |
 |:---:|---|:---:|---|
+| 🔴 P0 | 인프라 셋업 (Atlas/Vercel/Railway) | W1 종료 | 모든 개발 시작 불가 |
 | 🔴 P0 | 인증, 노트/폴더 CRUD, 태그 파서 | W2 | MVP 자체 불가 |
 | 🔴 P0 | 4-pane 레이아웃 + TabBar | W2 | 모든 화면 기반 |
 | 🔴 P0 | TiptapEditor (자동저장 + 배지) | W3 초 | 핵심 UX |
@@ -292,11 +317,12 @@
 
 ---
 
-## 5. 의존성 그래프 (v2)
+## 5. 의존성 그래프 (v2.1)
 
 ```mermaid
 flowchart LR
   subgraph W1["W1: 기반"]
+    INFRA["인프라 셋업 (4.1-4.9)"]
     SETUP_BE["BE 셋업 (2.A)"]
     SETUP_FE["FE 셋업 + DS (3.A)"]
   end
@@ -310,7 +336,7 @@ flowchart LR
     TAB["TabBar + Tab Store (3.D)"]
   end
 
-  subgraph W3["W3: 차별 기능 ⭐"]
+  subgraph W3["W3: 차별 기능"]
     EDITOR["TiptapEditor (3.E)"]
     GRAPH_BE["그래프 API (2.E)"]
     GRAPH_FE["2D 그래프 (3.F)"]
@@ -319,11 +345,13 @@ flowchart LR
   end
 
   subgraph W4["W4: 마무리"]
-    POLISH["테마·반응형 (3.H)"]
-    DEPLOY["배포"]
+    POLISH["테마·반응형 (3.H) + 인프라 지원"]
+    DEPLOY["배포 점검"]
     DEMO["시연·발표 (5.x)"]
   end
 
+  INFRA --> SETUP_BE
+  INFRA --> SETUP_FE
   SETUP_BE --> AUTH_BE --> NOTE_BE --> PARSE
   SETUP_FE --> AUTH_FE --> LAYOUT --> TAB
   AUTH_BE --> AUTH_FE
@@ -337,45 +365,6 @@ flowchart LR
   RIGHT --> POLISH
   POLISH --> DEPLOY --> DEMO
 ```
-
----
-
-## 6. 협업 약속 (Working Agreement)
-
-1. **회의**: 주 2회 (화·금 19:00, 30분), Discord 음성
-2. **데일리 스탠드업**: 매일 21:00, Discord 텍스트 (어제·오늘·블로커 3줄)
-3. **PR 리뷰**: 24시간 내 응답, 같은 트랙 멤버가 우선 리뷰
-4. **블로커**: 2시간 이상 막히면 즉시 팀에 공유 (혼자 끙끙 X)
-5. **휴식·결석**: 24시간 전 사전 공지
-6. **문서 갱신**: 코드 변경이 명세에 영향 주면 같은 PR에 문서 수정 포함
-7. **커밋 컨벤션**: 컨벤셔널 커밋 (`feat:`, `fix:`, `docs:` 등) — [Git 가이드](../04_개발가이드/Git_협업_가이드.md)
-
----
-
-## 7. 자가 점검 체크리스트 (PM)
-
-매 주말마다 PM 확인:
-
-- [ ] 이번 주 P0 작업이 모두 마감 안에 끝났는가?
-- [ ] 블로커 이슈가 GitHub에 라벨링되어 있는가?
-- [ ] 모든 PR이 리뷰 거쳤는가? (자기 PR 자기 머지 금지)
-- [ ] 문서가 코드 변경을 반영하고 있는가?
-- [ ] 리스크 대장에 새 항목이 있는가?
-- [ ] 다음 주 작업이 모든 멤버에게 할당되어 있는가?
-
----
-
-## 8. v1 → v2 변경 요약
-
-| 변경 | v1 | v2 |
-|---|---|---|
-| **WBS 작업 항목 수** | 36개 | **42개** (+6) |
-| 신규 작업 | — | 4-pane 레이아웃, TabBar+Tab Store, TiptapEditor 마이그레이션, RightPanel, 캘린더 API, 통합 검색 API, 자주 쓴 태그 API |
-| 제거 작업 | 휴지통 UI | (없음 — 휴지통 폐기로 컴포넌트 1개 제거) |
-| FE1 부담 | 18일 | 18일 (동일, 3D→2D ↔ Tiptap·멀티탭 ↔ 상쇄) |
-| FE2 부담 | 16일 | **18일** (+2일 — 4-pane + 우측바) |
-| BE1 부담 | 15일 | **17일** (+2일 — 검색+자주쓴태그 신규) |
-| BE2 부담 | 12일 | **13일** (+1일 — 캘린더) |
 
 ---
 
