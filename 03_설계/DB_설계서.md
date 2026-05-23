@@ -4,7 +4,6 @@
 > **선행 문서**: [`시스템_아키텍처.md`](./시스템_아키텍처.md)
 > **참고 (기존 자료)**: [`99_기존자료/backend_mongodb.js`](../99_기존자료/backend_mongodb.js) — MongoDB CRUD 샘플 코드
 > **버전**: v2.0 (2026-05-23)
-> **이전 버전과 차이**: `&` PAC 폐기 → 자유 형식 오브젝트, `deleted_at` 필드 제거 (하드 삭제)
 
 ---
 
@@ -220,7 +219,6 @@ export const User = model('User', userSchema);
 | `created_at` | Date | ✅ | — |
 | `updated_at` | Date | ✅ | — |
 
-> ⚠️ **v1 → v2 변경**: `deleted_at` 필드 **삭제** (하드 삭제로 정책 변경)
 
 #### 임베드 서브 스키마
 
@@ -292,7 +290,6 @@ export const User = model('User', userSchema);
 | `attributes` | Object | ❌ | 자유 메타 |
 | `created_at` | Date | ✅ | — |
 
-> ⚠️ **v1 → v2 변경**: `pac_role` 필드 **삭제** (PAC 개념 폐기)
 
 **동기화 정책**:
 - 노트 저장(Create/Update) 시 → `documents.nodes` 갱신 + `nodes` 컬렉션도 함께 upsert
@@ -438,32 +435,6 @@ try {
 - **개발 중**: 매주 금요일 `mongodump`로 백업 (BE1)
 - **스키마 변경**: `Backend/src/migrations/` 에 마이그레이션 스크립트 (예: `001_remove_pac_role.ts`)
 - **롤백**: 각 마이그레이션에 `down()` 함수 포함
-
----
-
-## 8. v1 → v2 변경 요약
-
-| 변경 | v1 | v2 | 이유 |
-|---|---|---|---|
-| `nodes.pac_role` | 있었음 (Parent/Adult/Child) | **삭제** | PAC 폐기 → 자유 형식 |
-| `nodes.link_type` | 'mention'/'tag'/'pac' | **`token_type`로 명칭 통일**: 'mention'/'tag'/'object' | 일관성 |
-| `documents.deleted_at` | 있었음 | **삭제** | 하드 삭제 정책 |
-| 휴지통 쿼리 | `{ deleted_at: { $ne: null } }` | **불필요** | 휴지통 UI 폐기 |
-| 새 쿼리 | 없었음 | **자주 쓴 태그 Top 3 / 캘린더 작성일 집계 추가** | v2 신규 기능 |
-
----
-
-## 9. 자가 점검 체크리스트 (BE 팀)
-
-작업 완료 전 확인:
-
-- [ ] 모든 컬렉션에 인덱스 정의 완료
-- [ ] Mongoose 스키마에 `required`, `min/max`, `enum` 검증 적용
-- [ ] `password_hash` 응답에서 제외 (`.select('-password_hash')`)
-- [ ] 응답 변환 시 `__v` 제거
-- [ ] 트랜잭션 작업에 `session` 적용
-- [ ] 시드 스크립트로 로컬에서 그래프 뷰까지 동작 확인
-- [ ] **v2 변경 사항 반영**: `pac_role` 제거, `deleted_at` 제거, `token_type` 사용
 
 ---
 

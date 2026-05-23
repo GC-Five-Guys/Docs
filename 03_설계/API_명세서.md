@@ -4,7 +4,6 @@
 > **선행 문서**: [`DB_설계서.md`](./DB_설계서.md)
 > **버전**: v2.0 (2026-05-23)
 > **Base URL**: `http://localhost:4000/api/v1` (개발) / `https://api.tri-link.app/api/v1` (운영)
-> **이전 버전과 차이**: 그래프 API 재정의 (파일 중심), 검색 통합, 자주 쓴 태그/캘린더 API 신규, `&` PAC 폐기
 
 ---
 
@@ -732,31 +731,6 @@ export const searchApi = {
 
 - **OpenAPI 3.0 명세** (`Backend/openapi.yaml`): BE1이 v2 마무리 시점에 생성
 - **Postman Collection** (`docs/postman/Tri-Link-v2.json`): BE1이 작성, 팀원 import
-
----
-
-## 14. v1 → v2 변경 요약
-
-| 변경 | v1 | v2 |
-|---|---|---|
-| 그래프 API | `?type=mention\|tag\|pac` 단일 선택 | `?types=mention,tag,object` 복수 선택 (토글) |
-| 그래프 응답 | 엔티티만 노드 | **파일 + 엔티티** 모두 노드 |
-| 검색 API | `GET /notes/search` | **`GET /search` (통합 — 엔티티+노트)** |
-| 자주 쓴 태그 | 없음 | **`GET /stats/top-tokens` 신규** |
-| 캘린더 | 없음 | **`GET /calendar` 신규** |
-| 삭제 정책 | 정의 안 됨 (소프트 가정) | **하드 삭제 (즉시 영구)** |
-| `&` 의미 | `pac` (Parent/Adult/Child) | `object` (자유 형식) |
-
----
-
-## 15. 변경 이력 (Changelog)
-
-| 버전 | 날짜 | 변경 | 작성자 |
-|---|---|---|---|
-| v1.0 | 2026-05-19 | 초안 (18개 엔드포인트) | PM |
-| v2.0 | 2026-05-23 | 기획 재정의 반영 (21개 엔드포인트) | PM |
-
-> 변경 시 PR 단위로 본 문서 함께 수정 → 리뷰어가 명세-구현 일치 여부 확인.
 
 ---
 
