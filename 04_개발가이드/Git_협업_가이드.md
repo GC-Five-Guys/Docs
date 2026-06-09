@@ -4,6 +4,12 @@
 > **목적**: 4명이 동시에 코드를 짜도 충돌·실수가 최소화되는 협업 룰
 > **버전**: v1.0 (2026-05-19)
 
+**🇺🇸 English**
+
+> **Audience**: The whole team (assumes beginner-to-intermediate Git users)
+> **Purpose**: Collaboration rules that minimize conflicts and mistakes even when 4 people code simultaneously
+> **Version**: v1.0 (2026-05-19)
+
 ---
 
 ## 0. 한 줄 요약
@@ -15,6 +21,14 @@ main ← develop ← feature/내-작업
 ```
 
 > **절대 main에 직접 push 하지 않는다. 절대 자기 PR을 자기가 머지하지 않는다.**
+
+**🇺🇸 English**
+
+## 0. One-Line Summary
+
+> Tree (Korean labels above): `feature/내-작업` = your working branch; `작업` = work; `코드리뷰` = code review; `develop 머지` = merge into develop.
+
+> **Never push directly to main. Never merge your own PR yourself.**
 
 ---
 
@@ -55,14 +69,51 @@ ssh-keygen -t ed25519 -C "kang@example.com"
 cat ~/.ssh/id_ed25519.pub   # 출력된 키를 GitHub 계정 설정에 등록
 ```
 
+**🇺🇸 English**
+
+## 1. One-Time Only (Per-PC Setup)
+
+### 1.1 Verify Git Installation
+
+> Inline comment: `# git version 2.30.0 이상이면 OK` means "git version 2.30.0 or higher is OK".
+
+### 1.2 Register User Information
+
+> Inline note: `# 강두현` is the member name Doohyun Kang (강두현). Use your own school email or GitHub-registered email.
+
+> ⚠️ Match your school email or your GitHub-registered email (so commit authorship is matched correctly).
+
+### 1.3 Line-Ending Policy (Prevents Cross-OS Conflicts)
+
+> Inline comments: `# macOS / Linux` and `# Windows` indicate which command to run per OS.
+
+### 1.4 SSH Key (Optional, Recommended)
+
+To push/pull without typing your password every time:
+
+> Inline comment: `# 출력된 키를 GitHub 계정 설정에 등록` means "register the printed key in your GitHub account settings".
+
 ---
 
 ## 2. 리포지토리 클론 & 초기 환경
 
+본 프로젝트는 GitHub 조직 **GC-Five-Guys** 아래 **3개의 독립 리포지토리**로 구성된 멀티 리포 구조입니다. 모노리포가 아니므로, 본인 역할에 맞는 리포를 각각 클론합니다.
+
+| 리포 | 역할 | 스택 |
+|---|---|---|
+| `FiveGuys-Frontend` | 클라이언트 | React 19 + Vite |
+| `FiveGuys-Backend` | API 서버 | Express 5 + MongoDB |
+| `Docs` | 문서 패키지 | 마크다운 문서 |
+
 ```bash
-# 1. 리포지토리 클론
-git clone git@github.com:five-guys/tri-link.git
-cd tri-link
+# 1. 본인 역할에 맞는 리포지토리 클론 (예: 프론트엔드 담당)
+git clone git@github.com:GC-Five-Guys/FiveGuys-Frontend.git
+cd FiveGuys-Frontend
+
+# (백엔드 담당이면)
+# git clone git@github.com:GC-Five-Guys/FiveGuys-Backend.git
+# (문서 담당이면)
+# git clone git@github.com:GC-Five-Guys/Docs.git
 
 # 2. develop 브랜치로 이동 (작업은 항상 여기서 분기)
 git checkout develop
@@ -71,25 +122,59 @@ git pull
 
 ### 2.1 리포 구조
 
-```
-tri-link/                ← Git 리포 루트
-├── Front/              ← Next.js
-├── Backend/            ← Express
-├── docs/               ← 본 문서들
-├── .gitignore
-└── README.md
-```
+3개 리포는 각각 독립된 Git 저장소이며, 각자 자체 구조를 가집니다.
+
+- **FiveGuys-Frontend** ← React + Vite. 클라이언트 소스는 `client/` 디렉터리에 위치.
+- **FiveGuys-Backend** ← Express. 서버 소스는 `src/` 디렉터리에 위치.
+- **Docs** ← 본 마크다운 문서 패키지.
+
+> 💡 각 리포는 자체 `.gitignore`, `README.md`, 자체 CI 워크플로우를 가집니다.
 
 ### 2.2 `.gitignore` (이미 설정됨)
 
 다음은 **절대** 커밋되지 않습니다:
 - `node_modules/`
 - `.env`, `.env.local`
-- `.next/`, `dist/`, `build/`
+- `dist/`, `build/`
 - `*.log`
 - `.DS_Store`
 
 > 💡 `.env`를 실수로 커밋하면 비밀키 노출! 의심되면 즉시 PM에게 알릴 것.
+
+**🇺🇸 English**
+
+## 2. Repository Clone & Initial Environment
+
+This project is a **multi-repo** setup made of **3 independent repositories** under the GitHub organization **GC-Five-Guys**. It is **not** a monorepo, so you clone the repo that matches your role.
+
+| Repo | Role | Stack |
+|---|---|---|
+| `FiveGuys-Frontend` | Client | React 19 + Vite |
+| `FiveGuys-Backend` | API server | Express 5 + MongoDB |
+| `Docs` | Documentation package | Markdown documents |
+
+> Inline comments in the bash block above (Korean): clone the repository for your role (e.g., frontend), and use the commented-out lines for the backend or docs repos. `git checkout develop` then `git pull` moves you to develop, where all work branches from.
+
+### 2.1 Repo Structure
+
+The 3 repos are each an independent Git repository, each with its own structure.
+
+- **FiveGuys-Frontend** ← React + Vite. Client source lives in the `client/` directory.
+- **FiveGuys-Backend** ← Express. Server source lives in the `src/` directory.
+- **Docs** ← this Markdown documentation package.
+
+> 💡 Each repo has its own `.gitignore`, `README.md`, and its own CI workflow.
+
+### 2.2 `.gitignore` (Already Configured)
+
+The following are **never** committed:
+- `node_modules/`
+- `.env`, `.env.local`
+- `dist/`, `build/`
+- `*.log`
+- `.DS_Store`
+
+> 💡 Committing `.env` by mistake leaks secret keys! If you suspect this happened, tell the PM immediately.
 
 ---
 
@@ -130,6 +215,36 @@ main      ← 운영 배포용 (보호 브랜치)
 - ✅ CI (lint + test) 통과 필수
 - ✅ "Squash and merge" 만 허용 (커밋 히스토리 깔끔)
 
+**🇺🇸 English**
+
+## 3. Branch Strategy (GitHub Flow + Protected develop)
+
+### 3.1 Branch Structure
+
+> Tree labels (Korean) above: `main ← 운영 배포용 (보호 브랜치)` = production deploy (protected branch); `develop ← 개발 통합 (보호 브랜치, PR로만 머지)` = dev integration (protected, merge only via PR). Names in parentheses are the branch owners: 최윤석 (Yunseok Choi), 김진서 (Jinseo Kim), 김인현 (Inhyeon Kim), 김유신 (Yushin Kim), 강두현 (Doohyun Kang).
+
+### 3.2 Branch Naming Rules
+
+`{type}/{kebab-case-summary}`
+
+| type | Use | Example |
+|---|---|---|
+| `feature/` | New feature | `feature/3d-graph-canvas` |
+| `fix/` | Bug fix | `fix/login-redirect-loop` |
+| `refactor/` | Refactoring (no behavior change) | `refactor/extract-note-service` |
+| `docs/` | Docs only | `docs/api-spec-v1` |
+| `chore/` | Build/config/packages | `chore/add-eslint-config` |
+| `test/` | Add tests | `test/link-parser` |
+| `style/` | Formatting, semicolons, etc. | `style/prettier-format` |
+
+### 3.3 main / develop Protection Rules (Set on GitHub by the PM)
+
+- ✅ Direct push forbidden (PR required)
+- ✅ At least 1 approval required before merging a PR
+- ✅ A PR must be synced with the latest develop to be mergeable
+- ✅ CI (lint + test) must pass
+- ✅ Only "Squash and merge" allowed (keeps commit history clean)
+
 ---
 
 ## 4. 일상 워크플로우 (작업 1건 기준)
@@ -156,11 +271,11 @@ git status
 git diff
 
 # 스테이지 → 커밋
-git add Front/features/editor/NoteEditor.tsx
+git add client/features/editor/NoteEditor.tsx
 git commit -m "feat(editor): add autosave with 2s debounce"
 
 # (선택) 여러 파일 한꺼번에
-git add Front/features/editor/
+git add client/features/editor/
 git commit -m "feat(editor): integrate autocomplete dropdown"
 ```
 
@@ -238,6 +353,61 @@ Closes #12
    git branch -d feature/note-editor
    ```
 
+**🇺🇸 English**
+
+## 4. Daily Workflow (Per Single Task)
+
+### 4.1 Start Work
+
+> Inline comments (Korean) in the bash block: `# 1. develop 최신화` = update develop to latest; `# 2. 작업 브랜치 생성` = create a working branch; `# 3. 작업 (코드 수정)` = do the work (edit code).
+
+### 4.2 Commit While Working
+
+> Inline comments: `# 변경사항 확인` = check changes; `# 스테이지 → 커밋` = stage then commit; `# (선택) 여러 파일 한꺼번에` = (optional) several files at once. Note the source path is `client/...` (Frontend repo uses the `client/` directory).
+
+> ⚠️ **Avoid** `git add .` or `git add -A`. Unintended files may sneak in. Add files explicitly.
+
+### 4.3 Sync With develop Mid-Work (Recommended Once a Day)
+
+When someone else merges into develop, we must follow along.
+
+> Inline comment: `# 또는 git merge develop` means "or use git merge develop".
+
+#### rebase vs merge
+
+| | rebase | merge |
+|---|---|---|
+| History | Single straight line (clean) | Branch & join (real flow) |
+| Conflict resolution | Per commit | All at once |
+| Recommended for | Working branch → sync from develop | develop → main merge (preserve) |
+
+→ **Our rule**: use `rebase` while working; do the develop→main merge via PR.
+
+### 4.4 Push to Remote
+
+> Inline comments: `# 첫 push (upstream 설정)` = first push (sets upstream); `# 이후` = afterwards.
+
+### 4.5 Create a Pull Request (PR)
+
+On the GitHub website, click [Compare & pull request] → fill in the template below.
+
+> The PR template above is in Korean. Translated:
+> **## 📝 Changes** — Added note editor autosave (2s debounce); added save-status UI.
+> **## 🎯 Related Issue** — Closes #12
+> **## ✅ Checklist** — [x] Confirmed `npm run dev` works locally; [x] `npm run lint` passes; [x] Added tests for new functions (`tests/editor.test.ts`); [x] Updated docs/ together if doc changes are needed.
+> **## 📸 Screenshots (if UI changed)** — (screenshot or GIF)
+> **## 🤔 What reviewers should check** — Whether the `useDebounce` hook implementation is appropriate; whether retry logic is needed on save failure.
+
+### 4.6 Review → Revise → Merge
+
+1. **Assign reviewers**: 1 member from the same track (FE/BE) + PM
+2. **Address review**: add follow-up commits responding to comments
+3. **Approval ✅**: reviewer clicks Approve
+4. **CI passes ✅**: GitHub Actions green
+5. **Squash and merge**: reviewer or PM merges (never the author themselves)
+6. **Delete branch**: after merge, click [Delete branch] in the GitHub UI
+7. **Local cleanup**: see the bash block above.
+
 ---
 
 ## 5. 커밋 메시지 컨벤션 (Conventional Commits)
@@ -298,6 +468,43 @@ fix(auth): 비밀번호 변경 후 토큰 무효화 처리
 
 > 💡 **한 가지만 일관성**: 팀에서 영문 또는 한글 택1. 본 프로젝트는 **자유** (작성자 편의).
 
+**🇺🇸 English**
+
+## 5. Commit Message Convention (Conventional Commits)
+
+### 5.1 Format
+
+> See the format block above (kept once).
+
+### 5.2 type Kinds
+
+| type | Meaning |
+|---|---|
+| `feat` | New feature |
+| `fix` | Bug fix |
+| `docs` | Docs only |
+| `style` | Formatting change (no code behavior change) |
+| `refactor` | Refactoring |
+| `test` | Add/modify tests |
+| `chore` | Build/packages/config |
+| `perf` | Performance improvement |
+
+### 5.3 scope (Optional, Area)
+
+`auth`, `editor`, `graph`, `notes`, `folders`, `ui`, `db`, `api`, `infra`, etc.
+
+### 5.4 Good vs Bad Examples
+
+✅ **Good examples**: see the block above (commands kept once).
+
+❌ **Bad examples** — the inline annotations (Korean) mean: `update` → "update what?"; `fix bug` → "which bug?"; `WIP` → "don't merge"; `asdf` → "intent unclear"; `"수정함"` → "Korean is fine, but this isn't specific."
+
+### 5.5 Korean Messages Are Also OK
+
+The two examples above (kept once) read: "add camera focus move on 3D node click" and "invalidate token after password change".
+
+> 💡 **Consistency on just one thing**: the team picks either English or Korean. This project leaves it **free** (author's convenience).
+
 ---
 
 ## 6. 충돌(Conflict) 해결법
@@ -307,7 +514,7 @@ fix(auth): 비밀번호 변경 후 토큰 무효화 처리
 `git rebase develop` 또는 PR 머지 시 다음 메시지:
 
 ```
-CONFLICT (content): Merge conflict in Front/features/editor/NoteEditor.tsx
+CONFLICT (content): Merge conflict in client/features/editor/NoteEditor.tsx
 ```
 
 ### 6.2 해결 절차
@@ -326,7 +533,7 @@ git status
 # 3. 둘 다 검토해서 올바른 코드만 남기고 마커 삭제
 
 # 4. 스테이지
-git add Front/features/editor/NoteEditor.tsx
+git add client/features/editor/NoteEditor.tsx
 
 # 5. 계속
 git rebase --continue   # rebase 중이면
@@ -348,6 +555,30 @@ git merge --abort
 1. 매일 1회 `develop` 동기화 (`git pull` + `rebase`)
 2. 같은 파일을 동시에 만지지 말 것 → 작업 분담 명확히
 3. 리뷰가 24시간 넘어가지 않게
+
+**🇺🇸 English**
+
+## 6. Resolving Conflicts
+
+### 6.1 When Conflicts Happen
+
+During `git rebase develop` or a PR merge, you see a message like the one above (`CONFLICT (content): ...`).
+
+### 6.2 Resolution Steps
+
+> Inline comments (Korean) in the bash block: `# 1. 어느 파일이 충돌했는지 확인` = check which file conflicted; `# 2. 충돌 파일 열기 → 다음 마커 찾기` = open the conflicted file and find these markers; `# 우리 브랜치 코드` = our branch's code; `# develop 브랜치 코드` = develop branch's code; `# 3. 둘 다 검토해서 올바른 코드만 남기고 마커 삭제` = review both, keep only correct code, delete markers; `# 4. 스테이지` = stage; `# 5. 계속` = continue; `# rebase 중이면` = if mid-rebase; `# merge 중이면` = if mid-merge.
+
+### 6.3 When Conflicts Feel Scary
+
+**Abort** (see the bash block above): `# 또는` means "or".
+
+→ Changes are preserved and you return to the original state. Ask for help on Slack/Discord.
+
+### 6.4 Preventing Conflicts
+
+1. Sync `develop` once a day (`git pull` + `rebase`)
+2. Don't touch the same file simultaneously → divide work clearly
+3. Don't let reviews drag past 24 hours
 
 ---
 
@@ -390,6 +621,18 @@ git stash pop                       # 꺼내기
 git stash list                      # 목록
 ```
 
+**🇺🇸 English**
+
+## 7. Frequently Used Command Cheatsheet
+
+> The cheatsheet bash block above is kept once. English meanings of the Korean inline comments:
+> **Status** — `git status`: current change/stage state; `git log --oneline -10`: last 10 commits; `git log --oneline --graph --all`: visualize all branches.
+> **Changes** — `git diff`: unstaged changes; `git diff --staged`: staged changes; `git diff develop`: diff vs develop.
+> **Branches** — `git branch`: list local branches; `git branch -a`: include remote; `git checkout <branch>`: switch; `git checkout -b <branch>`: create + switch; `git branch -d <branch>`: delete (safe); `git branch -D <branch>`: force delete.
+> **Sync** — `git pull`: remote → local; `git push`: local → remote; `git fetch`: fetch remote info only (no merge).
+> **Undo** — `git restore <file>`: discard working changes (not staged); `git restore --staged <file>`: unstage; `git commit --amend`: edit last commit message (before push!); `git reset --soft HEAD~1`: undo last commit (keep changes); `git reset --hard HEAD~1`: fully delete last commit (❌ dangerous).
+> **stash** — `git stash`: temporarily save current changes; `git stash pop`: restore; `git stash list`: list.
+
 ---
 
 ## 8. 위험한 명령어 (사용 시 사전 알림)
@@ -406,24 +649,79 @@ git stash list                      # 목록
 
 > 🛡️ **원칙**: 본인이 단독 사용 중인 `feature/*` 브랜치 외에는 force/reset 금지.
 
+**🇺🇸 English**
+
+## 8. Dangerous Commands (Announce Before Use)
+
+The following **can wipe out other people's work**, so a Discord announcement before use is mandatory:
+
+| Command | Danger |
+|---|---|
+| `git push --force` (or `-f`) | Overwrites remote history — never on main/develop |
+| `git push --force-with-lease` | The safer force push (detects changes) |
+| `git reset --hard <remote-commit>` | Makes you unable to receive others' pushes locally |
+| `git rebase main` (when main is also used by others) | Never rebase a shared branch |
+| `git clean -fd` | Deletes all untracked files |
+
+> 🛡️ **Principle**: No force/reset except on your own solely-used `feature/*` branch.
+
 ---
 
 ## 9. GitHub Actions (CI) 자동 검증
 
 PR을 올리면 다음이 자동으로 실행됩니다. **모두 녹색이어야 머지 가능**.
 
+각 리포는 자체 CI 워크플로우를 가지며, 자기 리포 안에서만 실행됩니다 (멀티 리포 구조).
+
+**FiveGuys-Frontend** (React + Vite):
+
 | Check | 내용 |
 |---|---|
-| `lint-fe` | `cd Front && npm run lint` |
-| `lint-be` | `cd Backend && npm run lint` |
-| `typecheck-fe` | `cd Front && npm run typecheck` |
-| `typecheck-be` | `cd Backend && npm run typecheck` |
-| `test-be` | `cd Backend && npm test` (Jest) |
+| `lint` | `npm run lint` |
+| `typecheck` | `npm run typecheck` |
+| `build` | `npm run build` (Vite 빌드) |
+
+**FiveGuys-Backend** (Express):
+
+| Check | 내용 |
+|---|---|
+| `lint` | `npm run lint` |
+| `typecheck` | `npm run typecheck` |
+| `test` | `npm test` (Jest) |
 
 빨간 표시가 뜨면:
 1. GitHub PR 화면 → [Details] 클릭 → 로그 확인
 2. 로컬에서 동일 명령 실행 → 재현 → 수정
 3. 추가 커밋 push → CI 재실행
+
+**🇺🇸 English**
+
+## 9. GitHub Actions (CI) Automatic Checks
+
+When you open a PR, the following run automatically. **All must be green to merge.**
+
+Each repo has its own CI workflow that runs only inside that repo (multi-repo setup).
+
+**FiveGuys-Frontend** (React + Vite):
+
+| Check | What it runs |
+|---|---|
+| `lint` | `npm run lint` |
+| `typecheck` | `npm run typecheck` |
+| `build` | `npm run build` (Vite build) |
+
+**FiveGuys-Backend** (Express):
+
+| Check | What it runs |
+|---|---|
+| `lint` | `npm run lint` |
+| `typecheck` | `npm run typecheck` |
+| `test` | `npm test` (Jest) |
+
+If a red mark appears:
+1. GitHub PR screen → click [Details] → read the logs
+2. Run the same command locally → reproduce → fix
+3. Push a follow-up commit → CI re-runs
 
 ---
 
@@ -485,6 +783,43 @@ git checkout origin/feature/note-editor   # detached HEAD
 git checkout -b note-editor-review origin/feature/note-editor
 ```
 
+**🇺🇸 English**
+
+## 10. Scenario-Based FAQ
+
+### Q1. I worked on the wrong branch
+
+> Inline comments: `# 변경사항 stash → 올바른 브랜치로 이동 → pop` means "stash changes → switch to the correct branch → pop".
+
+### Q2. I accidentally committed a password / `.env`
+
+🚨 **Tell the PM immediately.** Simply removing the commit is not enough (it stays in history).
+
+Response:
+1. Invalidate the password/API key immediately (reissue new ones)
+2. The PM cleans history with `git filter-repo` (or BFG)
+3. Every member re-clones the repo
+
+### Q3. My PR conflicts with develop
+
+> Inline comments: `# 충돌 해결 → git rebase --continue` means "resolve conflicts → git rebase --continue"; `# 본인 브랜치만! develop X` means "your own branch only! never develop".
+
+### Q4. I pushed directly to main (accident)
+
+Tell the PM immediately. Branch protection usually blocks this, but if it slips through:
+- If no one has pulled yet, `git revert <commit>` + push
+- If someone already pulled, merge the revert commit via a new PR
+
+### Q5. I wrote the last commit message wrong
+
+Before push: see the first bash block above.
+
+After push (if no one has pulled): see the second bash block above (`git commit --amend` then `git push --force-with-lease`).
+
+### Q6. I want to check out someone else's branch
+
+> Inline comments: `# detached HEAD` and `# 또는` ("or") indicate the two ways to fetch and view another member's branch.
+
 ---
 
 ## 11. PR 리뷰 가이드 (리뷰어용)
@@ -518,6 +853,39 @@ git checkout -b note-editor-review origin/feature/note-editor
 - 24시간 내 첫 반응 (Approve 또는 Comment)
 - 이틀 이상 응답 못 할 상황이면 디스코드 사전 공지
 
+**🇺🇸 English**
+
+## 11. PR Review Guide (For Reviewers)
+
+### 11.1 What Reviewers Should Check
+
+| Priority | Item |
+|---|---|
+| 🔴 | Does the feature work as the PR describes? (check out locally and run) |
+| 🔴 | Security issues (env exposure, SQL injection, XSS, etc.) |
+| 🔴 | Does it match the spec? (API spec, DB schema) |
+| 🟡 | Convention compliance (naming, structure, types) |
+| 🟡 | Any missing tests? |
+| 🟡 | Any missing error handling? |
+| 🟢 | Readability / comments / variable names |
+
+### 11.2 Review Comment Tone
+
+✅ **Constructive**:
+- "Splitting this into a zod schema would make it reusable, I think."
+- "Looks like try-catch is missing here — is that intentional?"
+- "👍 Nice approach! Might be worth applying elsewhere too."
+
+❌ **Avoid**:
+- "Why did you do it like this?"
+- "Rewrite it."
+- (Reject with no comment)
+
+### 11.3 Review Response Time
+
+- First response within 24 hours (Approve or Comment)
+- If you can't respond for more than two days, announce in advance on Discord
+
 ---
 
 ## 12. 자가 점검 (PR 올리기 전)
@@ -531,6 +899,23 @@ git checkout -b note-editor-review origin/feature/note-editor
 - [ ] 스크린샷 첨부 (UI 변경 시)?
 - [ ] 비밀번호·env 안 들어갔는가?
 
+**🇺🇸 English**
+
+## 12. Self-Check (Before Opening a PR)
+
+- [ ] Synced with the latest `develop`? (`git pull` + `rebase`)
+- [ ] `npm run lint` passes locally?
+- [ ] `npm run test` passes locally? (for your track)
+- [ ] Actually ran the changed code? (UI in the browser, API in Postman)
+- [ ] Does the commit message follow the convention?
+- [ ] Filled in [Changes / Issue / Checklist] in the PR description?
+- [ ] Attached screenshots (if UI changed)?
+- [ ] No passwords or env values included?
+
 ---
 
 > 📌 **다음**: [코딩 컨벤션](./코딩_컨벤션.md) — 코드 스타일 룰
+
+**🇺🇸 English**
+
+> 📌 **Next**: [Coding Conventions](./코딩_컨벤션.md) — code style rules
